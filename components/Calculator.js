@@ -1,25 +1,28 @@
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 
-export default function Calculator() {
+export default function Calculator({ makeATypo }) {
   const [input, setInput] = useState('');
   const [result, setResult] = useState('');
 
   const handleCalc = () => {
-    const allowedChars = '123456789+-*/';
-    input.split('').forEach((char) => {
+    const allowedChars = '1234567890+-*/';
+    for (char of input) {
       if (!allowedChars.includes(char)) {
-        setResult('ERROR');
+        setResult(makeATypo('ERROR'));
         return;
       }
-    });
-    setResult(eval(input));
+    };
+    setResult(makeATypo(eval(input).toString()));
     setInput('');
   };
 
+  const inputText = useRef(makeATypo('Input'))
+  const resultText = useRef(makeATypo('Result'))
+
   return (
     <View style={styles.container}>
-      <Text style={styles.paragraph}>Inintuput</Text>
+      <Text style={styles.paragraph}>{inputText.current}</Text>
       <Text style={styles.prompt}>{input}</Text>
       <View style={styles.inputBox}>
         <TouchableOpacity
@@ -101,7 +104,7 @@ export default function Calculator() {
           <Text>÷</Text>
         </TouchableOpacity>
       </View>
-      <Text style={styles.paragraph}>Relesulut</Text>
+      <Text style={styles.paragraph}>{resultText.current}</Text>
       <Text style={styles.paragraph}>{result}</Text>
     </View>
   );
@@ -155,6 +158,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'black',
     width: 250,
+    height: 33,
     fontSize: 16,
     padding: 6,
   },
