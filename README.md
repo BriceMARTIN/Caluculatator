@@ -10,6 +10,8 @@ You may access the app from your phone by scanning the following QR code with Ex
 
 ![QR code](assets/qr-code.png)
 
+If the QR code leads to a 404 (which it most likely will), you will have to test it locally by your own means.
+
 # Patch notes
 ## 1.0.0
 - Added pretty much everything as of now (obviously)
