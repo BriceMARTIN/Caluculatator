@@ -1,11 +1,11 @@
-import { Text, SafeAreaView, StyleSheet } from 'react-native';
-import { useRef } from 'react';
+import { Text, SafeAreaView, StyleSheet } from 'react-native'
+import { useRef } from 'react'
 
 // You can import supported modules from npm
-import { Card } from 'react-native-paper';
+import { Card } from 'react-native-paper'
 
 // or any files within the Snack
-import Calculator from './components/Calculator';
+import Calculator from './components/Calculator'
 
 export default function App() {
   const makeATypo = (correctText) => {
@@ -68,9 +68,9 @@ export default function App() {
       <Card>
         <Calculator makeATypo={makeATypo} />
       </Card>
-      <Text style={styles.version}>Version 1.0.0</Text>
+      <Text style={styles.version}>Version 1.1.0</Text>
     </SafeAreaView>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -92,4 +92,4 @@ const styles = StyleSheet.create({
     color: 'gray',
     textAlign: 'center',
   },
-});
+}) 

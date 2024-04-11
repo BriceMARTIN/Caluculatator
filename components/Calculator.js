@@ -1,21 +1,31 @@
-import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
-import { useState, useRef } from 'react';
+import { Text, View, StyleSheet, TouchableOpacity } from 'react-native'
+import { useState, useRef } from 'react'
 
 export default function Calculator({ makeATypo }) {
-  const [input, setInput] = useState('');
-  const [result, setResult] = useState('');
+  const [input, setInput] = useState('')
+  const [result, setResult] = useState('')
+
+  const sr = (square) => {
+    return Math.sqrt(square)
+  }
 
   const handleCalc = () => {
-    const allowedChars = '1234567890+-*/';
-    for (char of input) {
-      if (!allowedChars.includes(char)) {
-        setResult(makeATypo('ERROR'));
-        return;
+    const allowedChars = '1234567890+-*/%^()'
+    for (char in input) {
+      if (!allowedChars.includes(input[char])) {
+        setResult(makeATypo('ERROR'))
+        setInput('')
+        return
       }
-    };
-    setResult(makeATypo(eval(input).toString()));
-    setInput('');
-  };
+    }
+    try {
+      setResult(makeATypo(eval(input).toString()))
+    } catch {
+      setResult(makeATypo('SYNTAX ERROR'))
+      return
+    }
+    setInput('')
+  }
 
   const inputText = useRef(makeATypo('Input'))
   const resultText = useRef(makeATypo('Result'))
@@ -25,6 +35,29 @@ export default function Calculator({ makeATypo }) {
       <Text style={styles.paragraph}>{inputText.current}</Text>
       <Text style={styles.prompt}>{input}</Text>
       <View style={styles.inputBox}>
+        {/* √ ^ ² % */}
+        <TouchableOpacity
+          style={styles.symbolButton}
+          /*onPress={() => setInput(input + 'sr(')}*/>
+          <Text>{/*√*/}</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.symbolButton}
+          onPress={() => setInput(input + '**')}>
+          <Text>^</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.symbolButton}
+          onPress={() => setInput(input + '**2')}>
+          <Text>²</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.symbolFourthButton}
+          onPress={() => setInput(input + '%')}>
+          <Text>%</Text>
+        </TouchableOpacity>
+
+        {/* 1 2 3 + */}
         <TouchableOpacity
           style={styles.inputButton}
           onPress={() => setInput(input + '1')}>
@@ -41,10 +74,12 @@ export default function Calculator({ makeATypo }) {
           <Text>3</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={styles.inputFourthButton}
+          style={styles.symbolFourthButton}
           onPress={() => setInput(input + '+')}>
           <Text>+</Text>
         </TouchableOpacity>
+
+        {/* 4 5 6 - */}
         <TouchableOpacity
           style={styles.inputButton}
           onPress={() => setInput(input + '4')}>
@@ -61,10 +96,12 @@ export default function Calculator({ makeATypo }) {
           <Text>6</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={styles.inputFourthButton}
+          style={styles.symbolFourthButton}
           onPress={() => setInput(input + '-')}>
           <Text>-</Text>
         </TouchableOpacity>
+
+        {/* 7 8 9 * */}
         <TouchableOpacity
           style={styles.inputButton}
           onPress={() => setInput(input + '7')}>
@@ -81,33 +118,47 @@ export default function Calculator({ makeATypo }) {
           <Text>9</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={styles.inputFourthButton}
+          style={styles.symbolFourthButton}
           onPress={() => setInput(input + '*')}>
           <Text>*</Text>
         </TouchableOpacity>
+
+        {/* ( 0 ) / */}
         <TouchableOpacity
           style={styles.inputButton}
-          onPress={() => setInput('')}>
-          <Text>C</Text>
+          onPress={() => setInput(input + '(')}>
+          <Text>(</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.inputButton}
           onPress={() => setInput(input + '0')}>
           <Text>0</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.inputButton} onPress={handleCalc}>
-          <Text>=</Text>
+        <TouchableOpacity
+          style={styles.inputButton}
+          onPress={() => setInput(input + ')')}>
+          <Text>)</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={styles.inputFourthButton}
+          style={styles.symbolFourthButton}
           onPress={() => setInput(input + '/')}>
           <Text>÷</Text>
+        </TouchableOpacity>
+
+        {/* C = */}
+        <TouchableOpacity
+          style={styles.symbolButton}
+          onPress={() => setInput('')}>
+          <Text>C</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.symbolButton} onPress={handleCalc}>
+          <Text>=</Text>
         </TouchableOpacity>
       </View>
       <Text style={styles.paragraph}>{resultText.current}</Text>
       <Text style={styles.paragraph}>{result}</Text>
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -135,7 +186,18 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     margin: 5,
   },
-  inputFourthButton: {
+  symbolButton: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 45,
+    height: 45,
+    backgroundColor: 'skyblue',
+    borderRadius: 25,
+    borderColor: 'black',
+    borderWidth: 1,
+    margin: 5,
+  },
+  symbolFourthButton: {
     alignItems: 'center',
     justifyContent: 'center',
     width: 45,
@@ -162,4 +224,4 @@ const styles = StyleSheet.create({
     fontSize: 16,
     padding: 6,
   },
-});
+}) 
