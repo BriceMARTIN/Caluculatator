@@ -9,7 +9,7 @@ A unique and very human calculator that maeks typos. Because why not.
 Please note that this is a mobile app, thus adapted specifically for this platform, and not PC. A QR code is provided in npm's daemon to try out on mobile.
 
 # Patch notes
-## 1.1.0 - The Science Update; Part 1
+## 1.1.0 - The Science Update: Part 1
 > Your favorite calculator got smatrer, and it will get even smarter later!
 - Added parenthesis, Euclidian divisions and powers
 - Delayed square roots to the next update, along with even more operators
